@@ -8,7 +8,7 @@ pipeline {
         stage('Get Code') {
             steps {
                 sh 'rm -rf .git'
-                git url:'https://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@github.com/anieto-unir/test-todo.git', branch:'develop'
+                git url:'https://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@github.com/anieto-unir/test-todo.git', branch:'develop'
                 sh 'rm samconfig.toml'
                 echo "Code"
             }
