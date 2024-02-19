@@ -1,5 +1,5 @@
 //
-// CI 2.0
+// CI 3.0
 //
 pipeline {
     agent any
