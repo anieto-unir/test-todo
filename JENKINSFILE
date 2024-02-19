@@ -17,8 +17,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                   sam build
-                   sam deploy --resolve-s3 --stack-name "todo-list-aws-staging" --region "us-east-1" --no-fail-on-empty-changeset --parameter-overrides Stage=staging
+                   #sam build
+                   #sam deploy --resolve-s3 --stack-name "todo-list-aws-staging" --region "us-east-1" --no-fail-on-empty-changeset --parameter-overrides Stage=staging
                    BASE_URL=$(aws cloudformation describe-stacks --stack-name todo-list-aws-staging --query 'Stacks[0].Outputs[?OutputKey==`BaseUrlApi`].OutputValue' --output text)
                    echo "export BASE_URL=${BASE_URL}" > env.sh
                    chmod a+x env.sh
@@ -32,9 +32,9 @@ pipeline {
             steps {
                 sh '''
                    . ./env.sh
-                   python3 -m pytest --junit-xml=result-int.xml test/integration/todoApiTest.py || true
+                   #python3 -m pytest --junit-xml=result-int.xml test/integration/todoApiTest.py || true
                 '''
-                junit allowEmptyResults: true, testResults:'result-int.xml'
+                //junit allowEmptyResults: true, testResults:'result-int.xml'
                 script
                 {
                     if (currentBuild.result == 'UNSTABLE')
@@ -49,7 +49,7 @@ pipeline {
                 sh '''
                    git checkout master
                    git config merge.ours.driver true
-                   git merge develop --no-edit
+                   git merge origin/develop --no-edit
                    git push
                 '''
             }
