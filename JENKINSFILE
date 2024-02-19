@@ -1,0 +1,44 @@
+//
+// CI 2.0
+//
+pipeline {
+    agent any
+
+    stages {
+        stage('Get Code') {
+            steps {
+                git url:'https://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@github.com/anieto-unir/test-todo.git', branch:'develop'
+                echo "Code"
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sh '''
+                   #sam build
+                   #sam deploy --resolve-s3 --stack-name "todo-list-aws" --region "us-east-1" --no-fail-on-empty-changeset
+                   BASE_URL=$(aws cloudformation describe-stacks --stack-name todo-list-aws --query 'Stacks[0].Outputs[?OutputKey==`BaseUrlApi`].OutputValue' --output text)
+                   echo "export BASE_URL=${BASE_URL}" > env.sh
+                   chmod a+x env.sh
+                   echo "La URL de la API es: ${BASE_URL}"
+                '''
+            }
+        }
+        
+        stage('Test')
+        {
+            steps {
+                sh '''
+                   . ./env.sh
+                   #python3 -m pytest --junit-xml=result-int.xml test/integration/todoApiTest.py || true
+                '''
+                junit testResults:'result-int.xml'
+                script
+                {
+                    if (currentBuild.result == 'UNSTABLE')
+                        error("")
+                }
+            }
+        }
+    }
+}
