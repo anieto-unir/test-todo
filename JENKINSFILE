@@ -1,5 +1,5 @@
 //
-// CD
+// CI
 //
 pipeline {
     agent any
