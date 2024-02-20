@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Get Code') {
             steps {
-                sh 'rm -rf .git'
+                deleteDir()
                 checkout scm
                 sh 'rm samconfig.toml'
                 echo "Code"
