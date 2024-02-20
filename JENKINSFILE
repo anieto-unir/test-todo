@@ -47,10 +47,10 @@ pipeline {
         {
             steps {
                 sh '''
-                   git checkout master
-                   git config merge.ours.driver true
-                   git merge origin/develop --no-edit
-                   git push
+                   //git checkout master
+                   //git config merge.ours.driver true
+                   //git merge origin/develop --no-edit
+                   //git push
                 '''
             }
         }
