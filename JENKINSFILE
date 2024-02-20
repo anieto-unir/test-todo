@@ -47,7 +47,7 @@ pipeline {
         {
             steps {
                 sh '''
-                   git checkout master
+                   git checkout origin/master
                    git config merge.ours.driver true
                    git merge origin/develop --no-edit
                    git push
