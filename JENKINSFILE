@@ -15,8 +15,8 @@ pipeline {
                         git checkout develop
                     '''
                 }
-*/
                 sh 'rm samconfig.toml'
+*/
                 echo "Code"
             }
         }
