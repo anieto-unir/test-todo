@@ -8,16 +8,12 @@ pipeline {
         stage('Get Code') {
             steps {
                 deleteDir()
-                checkout scm
-/*
                 withCredentials([string(credentialsId: 'URL-test-todo', variable: 'URL')]) {
                     sh '''
                         git clone ${URL} .
                         git checkout develop
                     '''
                 }
-                sh 'rm samconfig.toml'
-*/
                 echo "Code"
             }
         }
