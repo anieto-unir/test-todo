@@ -8,6 +8,7 @@ pipeline {
         stage('Get Code') {
             steps {
                 deleteDir()
+                checkout scm
 /*
                 withCredentials([string(credentialsId: 'URL-test-todo', variable: 'URL')]) {
                     sh '''
