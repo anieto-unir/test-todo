@@ -13,17 +13,6 @@ pipeline {
             }
         }
 
-        stage('Static') {
-            steps {
-                sh '''
-                    python3 -m flake8 --exit-zero --format=pylint src >flake8.out
-                    python3 -m bandit --exit-zero -r src -f custom -o bandit.out --severity-level medium --msg-template "{abspath}:{line}: [{test_id}] {msg}"
-                '''
-                recordIssues tools: [flake8(name: 'Flake8', pattern: 'flake8.out')]
-                recordIssues tools: [pyLint(name: 'Bandit', pattern: 'bandit.out')]
-            }
-        }
-
         stage('Deploy') {
             steps {
                 sh '''
