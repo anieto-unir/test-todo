@@ -9,6 +9,7 @@ pipeline {
             steps {
                 deleteDir()
                 checkout scm
+                wget https://raw.githubusercontent.com/anieto-unir/test-todo-config/production/samconfig.toml?token=GHSAT0AAAAAACULYRNJE7NOROPQXTPF3W7KZUF5QPQ
                 echo "Code"
             }
         }
